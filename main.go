@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"strings"
 )
 type Trainee struct{
 	ID int
@@ -28,17 +27,35 @@ func main(){
 	showOne := flag.Int("showOne", -1, "show trainee with this ID")
 	deleteTrainee := flag.Int("deleteTrainee", -1, "delete trainee with this ID")
 	flag.Parse()
-	scanner()
+
+	//scanner()
+
 	if *addTrainee{
-		fmt.Println("please enter ID, Surname, Name, Age, TA, QPA, Project in this format")
-		reader := bufio.NewReader(os.Stdin)
-		person, _ := reader.ReadString(',')
-		person = strings.Replace(person, "\r\n", "", 1)
-		//trainees = append(trainees, newTrainee)
+		fmt.Println("please enter ID, Surname, Name, Age, TA, QPA, Project. press ENTER after each value")
+		var newTrainee Trainee
+		scanner := bufio.NewScanner(os.Stdin)
+		scanner.Scan()
+		newTrainee.ID, _ =	strconv.Atoi(scanner.Text())
+		scanner.Scan()
+		newTrainee.Surname = scanner.Text()
+		scanner.Scan()
+		newTrainee.Name = scanner.Text()
+		scanner.Scan()
+		newTrainee.Age, _ =	strconv.Atoi(scanner.Text())
+		scanner.Scan()
+		newTrainee.TA = scanner.Text()
+		scanner.Scan()
+		newTrainee.QPA = scanner.Text()
+		scanner.Scan()
+		newTrainee.Project = scanner.Text()
+
+		trainees = append(trainees, newTrainee)
 	}
+
 	if *deleteTrainee > -1{
 
 	}
+
 	if *showAll{
 		tableStart()
 		for _, trainee := range trainees {
@@ -46,6 +63,7 @@ func main(){
 		}
 		tableEnd()
 	}
+
 	if *showOne > -1{
 		traineeID := Trainee{-1, "", "", -1, "", "", ""}
 		for _, trainee := range trainees {
@@ -98,7 +116,10 @@ func fillString(str string, fill int) string{
 
 func scanner() {
 	scanner := bufio.NewScanner(os.Stdin)
-	for scanner.Scan() {
+	i := 0
+	for  i < 8{
+		scanner.Scan()
 		fmt.Println(scanner.Text())
+		i++
 	}
 }
