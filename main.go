@@ -76,39 +76,23 @@ func tableEnd(){
 func tableContent(trainee Trainee){
 		id := strconv.Itoa(trainee.ID)
 		age := strconv.Itoa(trainee.Age)
-		dataPoint := "| "
-		dataPoint += id
-		for i := len(dataPoint); i < 6; i++{
-			dataPoint += " "
-		}
-		dataPoint += "| " + trainee.Surname
-		for i := len(dataPoint); i < 22; i++{
-			dataPoint += " "
-		}
-		dataPoint += "| " + trainee.Name
-		for i := len(dataPoint); i < 38; i++{
-			dataPoint += " "
-		}
-		dataPoint += "| " + age
-		for i := len(dataPoint); i < 49; i++{
-			dataPoint += " "
-		}
-		dataPoint += "| " + trainee.TA
-		for i := len(dataPoint); i < 68; i++{
-			dataPoint += " "
-		}
-		dataPoint += "| " + trainee.QPA
-		for i := len(dataPoint); i < 87; i++{
-			dataPoint += " "
-		}
-		dataPoint += "| " + trainee.Project
-		for i := len(dataPoint); i < 106; i++{
-			dataPoint += " "
-		}
-		dataPoint += "|"
+		dataPoint := "| " + fillString(id, 4)
+		dataPoint += "| " + fillString(trainee.Surname, 14)
+		dataPoint += "| " + fillString(trainee.Name, 14)
+		dataPoint += "| " + fillString(age, 9)
+		dataPoint += "| " + fillString(trainee.TA, 17)
+		dataPoint += "| " + fillString(trainee.QPA, 17)
+		dataPoint += "| " + fillString(trainee.Project, 17) + "|"
 		fmt.Println(dataPoint)
+}
 
+//fillString fills a string with spaces up to fill length.
 
+func fillString(str string, fill int) string{
+	for  i := len(str); i < fill; i++{
+		str +=" "
+	}
+	return str
 }
 
 func bubbleSort(a []int) []int{
