@@ -19,39 +19,25 @@ type Trainee struct{
 }
 
 func main(){
-	/*
-	fmt.Println("Hello World")
-	sortMe := []int{2, 15, 4, 6, 9, 2, 8, 34, 12, 23, 27}
-	fmt.Println(bubbleSort(sortMe))
-	 */
-	/*
-	age := flag.Int("Age", 20, "set Age")
-	name := flag.String("Name", "Alice", "set Name")
-	 */
-	people := []string{"Alice", "Bob"}
-	var dummy Trainee
-	dummy.ID = 1
-	dummy.Surname = "Hellman"
-	dummy.Name = "Alice"
-	dummy.Age = 18
-	dummy.TA = "Diffie"
-	dummy.QPA = "Bob"
-	dummy.Project = "Encryption"
-
-
+	dummy := Trainee{1, "Hellman", "Alice", 18, "Diffie", "Bob", "Encryption"}
 	var trainees []Trainee
 	trainees = append(trainees, dummy)
+
 	addTrainee := flag.Bool("addTrainee", false, "adds a trainee to the database")
 	showAll := flag.Bool("showAll", false, "show all trainees in a table")
-	//showOne := flag.Int("showOne", -1, "show trainee with this ID")
-	//delete
+	showOne := flag.Int("showOne", -1, "show trainee with this ID")
+	deleteTrainee := flag.Int("deleteTrainee", -1, "delete trainee with this ID")
 	flag.Parse()
+	scanner()
 	if *addTrainee{
-		fmt.Println("please provide a name")
+		fmt.Println("please enter ID, Surname, Name, Age, TA, QPA, Project in this format")
 		reader := bufio.NewReader(os.Stdin)
-		person,_ := reader.ReadString('\n')
+		person, _ := reader.ReadString(',')
 		person = strings.Replace(person, "\r\n", "", 1)
-		people = append(people, person)
+		//trainees = append(trainees, newTrainee)
+	}
+	if *deleteTrainee > -1{
+
 	}
 	if *showAll{
 		tableStart()
@@ -59,6 +45,21 @@ func main(){
 			tableContent(trainee)
 		}
 		tableEnd()
+	}
+	if *showOne > -1{
+		traineeID := Trainee{-1, "", "", -1, "", "", ""}
+		for _, trainee := range trainees {
+			if trainee.ID == *showOne{
+				traineeID = trainee
+			}
+		}
+		if traineeID.ID == -1{
+			fmt.Println("no such Trainee in Database")
+		} else {
+			tableStart()
+			tableContent(traineeID)
+			tableEnd()
+		}
 	}
 
 }
@@ -95,18 +96,9 @@ func fillString(str string, fill int) string{
 	return str
 }
 
-func bubbleSort(a []int) []int{
-	var i int = 1
-	for i != 0{
-		i = 0
-		for j := 0; j < (len(a)-1); j++{
-			if a[j] > a[j+1] {
-				var t int = a[j]
-				a[j] = a[j+1]
-				a[j+1] = t
-				i++
-			}
-		}
+func scanner() {
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		fmt.Println(scanner.Text())
 	}
-	return a
 }
