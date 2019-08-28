@@ -53,6 +53,11 @@ func main(){
 	}
 
 	if *deleteTrainee > -1{
+		for i, trainee := range trainees {
+			if trainee.ID == *deleteTrainee{
+				trainees = append(trainees[:i], trainees[i+1:]...)
+			}
+		}
 
 	}
 
